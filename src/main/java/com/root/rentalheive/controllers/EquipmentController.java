@@ -28,6 +28,7 @@ public class EquipmentController {
     public List<Equipment> getEquipments(){
         return equipmentServices.getEquipments();
     }
+
     @GetMapping("/{name}")
     public Equipment getEquipment(@PathVariable String name){
         return equipmentServices.getEquipmentByName(name);
