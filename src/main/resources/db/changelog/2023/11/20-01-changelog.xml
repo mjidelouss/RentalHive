@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1700523294080-1" author="amine (generated)">
+        <addColumn tableName="demand">
+            <column name="end_date" type="DATETIME"/>
+            <column name="start_date" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1700523294080-3" author="amine (generated)">
+        <dropForeignKeyConstraint baseTableName="equipment_demand" constraintName="FK_EQUIPMENTDEMAND_ON_DEMAND"/>
+    </changeSet>
+    <changeSet id="1700523294080-4" author="amine (generated)">
+        <dropColumn columnName="demand_id" tableName="equipment_demand"/>
+    </changeSet>
+    <changeSet id="1700523294080-5" author="amine (generated)">
+        <dropColumn columnName="demanded_date" tableName="demand"/>
+    </changeSet>
+
+</databaseChangeLog>

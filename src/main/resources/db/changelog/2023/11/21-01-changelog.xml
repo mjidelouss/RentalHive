@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1700560597609-1" author="amine (generated)">
+        <addColumn tableName="devis">
+            <column name="demand_id" type="BIGINT"/>
+            <column name="end_date" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1700560597609-2" author="amine (generated)">
+        <addColumn tableName="equipment_demand">
+            <column name="demand_id" type="BIGINT"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="star_date" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1700560597609-6" author="amine (generated)">
+        <addForeignKeyConstraint baseColumnNames="demand_id" baseTableName="devis" constraintName="FK_DEVIS_ON_DEMAND"
+                                 referencedColumnNames="id" referencedTableName="demand"/>
+    </changeSet>
+    <changeSet id="1700560597609-7" author="amine (generated)">
+        <addForeignKeyConstraint baseColumnNames="demand_id" baseTableName="equipment_demand"
+                                 constraintName="FK_EQUIPMENTDEMAND_ON_DEMAND" referencedColumnNames="id"
+                                 referencedTableName="demand"/>
+    </changeSet>
+    <changeSet id="1700560597609-8" author="amine (generated)">
+        <dropColumn columnName="start_date" tableName="demand"/>
+    </changeSet>
+    <changeSet id="1700560597609-9" author="amine (generated)">
+        <dropColumn columnName="started_date" tableName="equipment_demand"/>
+    </changeSet>
+
+</databaseChangeLog>
