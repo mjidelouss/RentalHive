@@ -5,6 +5,7 @@ import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.services.EquipmentService;
 import com.root.rentalheive.services.TypeServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,35 +27,55 @@ public class EquipmentController {
     }
 
     @GetMapping("")
-    public List<Equipment> getEquipments(){
-        return equipmentServices.getEquipments();
+    public ResponseEntity<List<Equipment>> getEquipments() {
+        List<Equipment> equipmentList = equipmentServices.getEquipments();
+        return new ResponseEntity<>(equipmentList, HttpStatus.OK);
     }
 
     @GetMapping("/{name}")
-    public Equipment getEquipment(@PathVariable String name){
-        return equipmentServices.getEquipmentByName(name);
+    public ResponseEntity<Equipment> getEquipment(@PathVariable String name) {
+        Equipment equipment = equipmentServices.getEquipmentByName(name);
+        return equipment != null
+                ? new ResponseEntity<>(equipment, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("")
-    public Equipment addEquipment(@RequestBody EquipmentDto equipmentDto){
-        Equipment equipment=Equipment.builder()
+    public ResponseEntity<Equipment> addEquipment(@RequestBody EquipmentDto equipmentDto) {
+        Equipment equipment = Equipment.builder()
                 .name(equipmentDto.getName())
                 .createdDate(Date.valueOf(LocalDate.now()))
                 .type(typeServices.findById(equipmentDto.getTypeId()))
                 .build();
-        return equipmentServices.saveEquipment(equipment);
+
+        Equipment savedEquipment = equipmentServices.saveEquipment(equipment);
+        return new ResponseEntity<>(savedEquipment, HttpStatus.CREATED);
     }
 
     @PutMapping("")
-    public Equipment updateEquipment(@RequestBody EquipmentDto equipmentdto){
-        Equipment equipment=equipmentServices.getEquipmentById(equipmentdto.getId());
-        equipment.setName(equipmentdto.getName());
-        equipment.setType(typeServices.findById(equipmentdto.getTypeId()));
-        return equipmentServices.updateEquipment(equipment);
+    public ResponseEntity<Equipment> updateEquipment(@RequestBody EquipmentDto equipmentDto) {
+        Equipment equipment = equipmentServices.getEquipmentById(equipmentDto.getId());
+
+        if (equipment != null) {
+            equipment.setName(equipmentDto.getName());
+            equipment.setType(typeServices.findById(equipmentDto.getTypeId()));
+
+            Equipment updatedEquipment = equipmentServices.updateEquipment(equipment);
+            return new ResponseEntity<>(updatedEquipment, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEquipment(@PathVariable Long id){
-        equipmentServices.deleteEquipment(equipmentServices.getEquipmentById(id));
+    public ResponseEntity<Void> deleteEquipment(@PathVariable Long id) {
+        Equipment equipment = equipmentServices.getEquipmentById(id);
+
+        if (equipment != null) {
+            equipmentServices.deleteEquipment(equipment);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DemandService {
     DemandeRepository demandeRepository;
+
     DemandService(DemandeRepository demandeRepository){
         this.demandeRepository = demandeRepository;
     }
