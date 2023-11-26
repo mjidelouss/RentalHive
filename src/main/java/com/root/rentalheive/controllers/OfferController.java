@@ -30,11 +30,6 @@ public class OfferController {
         return offerService.getOffers();
     }
 
-    @GetMapping("/{id}/send")
-    public void sendOffer(@PathVariable Long id){
-        this.offerService.sendOffer(id);
-    }
-
     @PostMapping("")
     public ResponseEntity<byte[]> saveOffer(@RequestBody OfferDto offerDto)throws IOException, DocumentException {
         Offer offer = this.offerService.saveOffer(offerDto.getDevis_id());

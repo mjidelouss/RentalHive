@@ -21,8 +21,6 @@ public class OfferService {
         this.offerRepository = offerRepository;
         this.devisRepository = devisRepository;
     }
-    @Autowired
-    private JavaMailSender mailSender;
 
     public List<Offer> getOffers(){return this.offerRepository.findAll();}
 
@@ -35,20 +33,6 @@ public class OfferService {
         }
         return null;
     }
-
-
-    public void sendOffer(Long id){
-        Offer offer = this.offerRepository.findById(id).get();
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("user@gmail.com");
-        message.setFrom("RentalHive@gmail.com");
-        message.setSubject("Final offer");
-        message.setText(offer.toMap().toString());
-
-        mailSender.send(message);
-    }
-
     public  void deleteOffer(Long id){
         Offer offer = this.offerRepository.findById(id).get();
         this.offerRepository.delete(offer);

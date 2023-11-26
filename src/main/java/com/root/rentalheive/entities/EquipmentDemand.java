@@ -21,7 +21,7 @@ public class EquipmentDemand {
 
     private int duration;
 
-    private Date starDate;
+    private Date startDate;
 
     @Nullable
     private Date endDate;

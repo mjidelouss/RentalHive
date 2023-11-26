@@ -5,6 +5,7 @@ import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.services.EquipmentService;
 import com.root.rentalheive.services.TypeServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;

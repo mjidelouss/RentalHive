@@ -38,12 +38,6 @@ public class Deviscontroller {
         return devisService.getDevis();
     }
 
-    @GetMapping("/{id}/send")
-    public void sendDevis(@PathVariable Long id){
-        this.devisService.sendDevis(id);
-    }
-
-
     @PostMapping("")
     public ResponseEntity<FileSystemResource> saveDevis(@RequestBody DevisDto devisDto) throws IOException, DocumentException {
         Devis devis = this.devisService.saveDevis(devisDto.getDate(), devisDto.getPrice(), devisDto.getDemand_id());

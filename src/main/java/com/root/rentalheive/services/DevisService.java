@@ -21,9 +21,6 @@ public class DevisService {
     DemandeRepository demandeRepository;
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
     public DevisService(DevisRepository devisRepository, DemandeRepository demandeRepository){
         this.devisRepository = devisRepository;
         this.demandeRepository = demandeRepository;
@@ -38,19 +35,6 @@ public class DevisService {
         devis.setPrice(price);
         devis.setStartedDate(date);
         return this.devisRepository.save(devis);
-    }
-
-
-    public void sendDevis(Long id){
-        Devis devis = this.devisRepository.findById(id).get();
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("user@gmail.com");
-        message.setFrom("RentalHive@gmail.com");
-        message.setSubject("Devis for your recent demand .");
-        message.setText( devis.toMap().toString());
-
-        mailSender.send(message);
     }
 
     public  void deleteDevis(Long id){
