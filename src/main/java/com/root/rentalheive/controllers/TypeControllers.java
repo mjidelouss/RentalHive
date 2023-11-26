@@ -1,6 +1,8 @@
 package com.root.rentalheive.controllers;
 import com.root.rentalheive.entities.Type;
 import com.root.rentalheive.services.TypeServices;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,27 +15,40 @@ public class TypeControllers {
     }
 
     @GetMapping("")
-    public List<Type> getTypes() {
-        return typeServices.getTypes();
+    public ResponseEntity<List<Type>> getTypes() {
+        List<Type> typeList = typeServices.getTypes();
+        return new ResponseEntity<>(typeList, HttpStatus.OK);
     }
 
     @GetMapping("/{name}")
-    public Type getType(@PathVariable String name){
-        return typeServices.findByName(name);
+    public ResponseEntity<Type> getType(@PathVariable String name) {
+        Type type = typeServices.findByName(name);
+        return type != null
+                ? new ResponseEntity<>(type, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("")
-    public Type addType(@RequestBody Type type){
-        return typeServices.addService(type);
+    public ResponseEntity<Type> addType(@RequestBody Type type) {
+        Type addedType = typeServices.addService(type);
+        return new ResponseEntity<>(addedType, HttpStatus.CREATED);
     }
 
     @PutMapping("")
-    public Type updateType(@RequestBody Type type){
-        return typeServices.updateService(type);
+    public ResponseEntity<Type> updateType(@RequestBody Type type) {
+        Type updatedType = typeServices.updateService(type);
+        return new ResponseEntity<>(updatedType, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteType(@PathVariable Long id){
-        typeServices.deleteService(typeServices.findById(id));
+    public ResponseEntity<Void> deleteType(@PathVariable Long id) {
+        Type type = typeServices.findById(id);
+
+        if (type != null) {
+            typeServices.deleteService(type);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
