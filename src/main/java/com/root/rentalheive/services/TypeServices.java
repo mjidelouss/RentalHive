@@ -2,6 +2,7 @@ package com.root.rentalheive.services;
 
 import com.root.rentalheive.entities.Type;
 import com.root.rentalheive.repositories.TypeRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,29 +20,32 @@ public class TypeServices {
         this.typeRepository=typeRepository;
     }
 
-    public Type addService(Type type) {
+    public Type addService(@Valid Type type) {
         return typeRepository.save(type);
     }
 
-    public Type updateService(Type type) {
-        return typeRepository.save(type);
+    public Type updateService(@Valid Type type) {
+        if (typeRepository.findById(type.getId()).isPresent()) {
+            return typeRepository.save(type);
+        } else {
+            throw new IllegalArgumentException("Type not found for id: " + type.getId());
+        }
     }
 
-    public void deleteService(Type type) {
-        typeRepository.delete(type);
+    public void deleteService(@Valid Type type) {
+        if (typeRepository.findById(type.getId()).isPresent()) {
+            typeRepository.delete(type);
+        } else {
+            throw new IllegalArgumentException("Type not found for id: " + type.getId());
+        }
     }
 
     public Type findByName(String name) {
-        if(typeRepository.findByName(name).isPresent()){
-            return typeRepository.findByName(name).get();
-        }
-        return null;
+        return typeRepository.findByName(name).orElse(null);
     }
-    public Type findById(Long id){
-        if(typeRepository.findById(id).isPresent()){
-            return typeRepository.findById(id).get();
-        }
-        return null;
+
+    public Type findById(Long id) {
+        return typeRepository.findById(id).orElse(null);
     }
 
     public List<Type> getTypes() {
