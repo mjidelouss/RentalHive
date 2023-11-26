@@ -46,11 +46,12 @@ public class DevisService {
         }
     }
 
-    public void deleteDevis(@NotNull Long id) {
+    public boolean deleteDevis(@NotNull Long id) {
         Devis devis = devisRepository.findById(id).orElse(null);
 
         if (devis != null) {
             this.devisRepository.delete(devis);
+            return true;
         } else {
             throw new IllegalArgumentException("Devis not found for id: " + id);
         }

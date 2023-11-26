@@ -34,8 +34,9 @@ public class Deviscontroller {
     public Deviscontroller(DevisService devisService){this.devisService = devisService;}
 
     @GetMapping("")
-    public List<Devis> getDevis(){
-        return devisService.getDevis();
+    public ResponseEntity<List<Devis>> getDevis() {
+        List<Devis> devisList = devisService.getDevis();
+        return new ResponseEntity<>(devisList, HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -62,10 +63,15 @@ public class Deviscontroller {
         return new ResponseEntity<>(fileResource, headers, HttpStatus.OK);
     }
 
-
     @DeleteMapping("/{id}")
-    public void deleteDevis(@PathVariable long id){
-        this.devisService.deleteDevis(id);
+    public ResponseEntity<Void> deleteDevis(@PathVariable long id) {
+        boolean deleted = this.devisService.deleteDevis(id);
+
+        if (deleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
