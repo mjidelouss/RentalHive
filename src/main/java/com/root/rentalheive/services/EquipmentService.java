@@ -17,7 +17,6 @@ public class EquipmentService {
     }
 
     public Equipment updateEquipment(@Valid Equipment equipment) {
-        // Assuming the ID is not null for an update
         if (equipment.getId() == null || !equipmentRepository.existsById(equipment.getId())) {
             throw new IllegalArgumentException("Equipment to update must have a valid ID and exist in the database.");
         }
@@ -25,7 +24,6 @@ public class EquipmentService {
     }
 
     public void deleteEquipment(@Valid Equipment equipment) {
-        // Assuming the ID is not null for a delete
         if (equipment.getId() == null || !equipmentRepository.existsById(equipment.getId())) {
             throw new IllegalArgumentException("Equipment to delete must have a valid ID and exist in the database.");
         }
@@ -41,7 +39,6 @@ public class EquipmentService {
     }
 
     public Equipment getEquipmentById(Long id) {
-        // Assuming the ID is not null for a retrieval
         if (id == null || !equipmentRepository.existsById(id)) {
             throw new IllegalArgumentException("Invalid Equipment ID or Equipment not found.");
         }

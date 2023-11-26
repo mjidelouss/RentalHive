@@ -5,8 +5,6 @@ import com.root.rentalheive.entities.Offer;
 import com.root.rentalheive.repositories.DevisRepository;
 import com.root.rentalheive.repositories.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,20 +20,32 @@ public class OfferService {
         this.devisRepository = devisRepository;
     }
 
-    public List<Offer> getOffers(){return this.offerRepository.findAll();}
-
-    public Offer saveOffer(Long devis_id){
-        Devis devis = this.devisRepository.findById(devis_id).get();
-        if(devis.isAccepted()){
-            Offer offer = new Offer();
-            offer.setDevis(devis);
-            return this.offerRepository.save(offer);
-        }
-        return null;
+    public List<Offer> getOffers() {
+        return offerRepository.findAll();
     }
-    public  void deleteOffer(Long id){
-        Offer offer = this.offerRepository.findById(id).get();
-        this.offerRepository.delete(offer);
+
+    public Offer saveOffer(Long devisId) {
+        Devis devis = devisRepository.findById(devisId).orElse(null);
+        if (devis == null) {
+            throw new IllegalArgumentException("Devis not found for id: " + devisId);
+        }
+
+        if (!devis.isAccepted()) {
+            throw new IllegalStateException("Cannot create offer for non-accepted Devis.");
+        }
+
+        Offer offer = new Offer();
+        offer.setDevis(devis);
+        return offerRepository.save(offer);
+    }
+
+    public void deleteOffer(Long id) {
+        Offer offer = offerRepository.findById(id).orElse(null);
+
+        if (offer == null) {
+            throw new IllegalArgumentException("Offer not found for id: " + id);
+        }
+        offerRepository.delete(offer);
     }
 
 }
