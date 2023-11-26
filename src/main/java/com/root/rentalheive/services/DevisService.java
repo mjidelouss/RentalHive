@@ -4,6 +4,8 @@ import com.root.rentalheive.entities.Demand;
 import com.root.rentalheive.entities.Devis;
 import com.root.rentalheive.repositories.DemandeRepository;
 import com.root.rentalheive.repositories.DevisRepository;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +28,32 @@ public class DevisService {
         this.demandeRepository = demandeRepository;
     }
 
-    public List<Devis> getDevis(){return this.devisRepository.findAll();}
-
-    public Devis saveDevis(Date date, float price, Long demand_id){
-        Demand demand = this.demandeRepository.findById(demand_id).get();
-        Devis devis = new Devis();
-        devis.setDemand(demand);
-        devis.setPrice(price);
-        devis.setStartedDate(date);
-        return this.devisRepository.save(devis);
+    public List<Devis> getDevis() {
+        return this.devisRepository.findAll();
     }
 
-    public  void deleteDevis(Long id){
-        Devis devis = this.devisRepository.findById(id).get();
-        this.devisRepository.delete(devis);
+    public Devis saveDevis(@NotNull Date date, @Positive float price, @NotNull Long demandId) {
+        Demand demand = this.demandeRepository.findById(demandId).orElse(null);
+
+        if (demand != null) {
+            Devis devis = new Devis();
+            devis.setDemand(demand);
+            devis.setPrice(price);
+            devis.setStartedDate(date);
+            return this.devisRepository.save(devis);
+        } else {
+            throw new IllegalArgumentException("Demand not found for id: " + demandId);
+        }
     }
 
+    public void deleteDevis(@NotNull Long id) {
+        Devis devis = devisRepository.findById(id).orElse(null);
+
+        if (devis != null) {
+            this.devisRepository.delete(devis);
+        } else {
+            throw new IllegalArgumentException("Devis not found for id: " + id);
+        }
+    }
 
 }
