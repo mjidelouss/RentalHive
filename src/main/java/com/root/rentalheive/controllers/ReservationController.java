@@ -1,12 +1,16 @@
 package com.root.rentalheive.controllers;
 
-import com.root.rentalheive.dto.EquipmentDto;
 import com.root.rentalheive.dto.ReservationDto;
 import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.entities.EquipmentDemand;
 import com.root.rentalheive.services.DemandService;
 import com.root.rentalheive.services.EquipmentDemandService;
 import com.root.rentalheive.services.EquipmentService;
+import com.root.rentalheive.services.Impl.DemandServiceImpl;
+import com.root.rentalheive.services.Impl.EquipmentDemandServiceImpl;
+import com.root.rentalheive.services.Impl.EquipmentServiceImpl;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,24 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/reservation")
 public class ReservationController {
-    EquipmentService equipmentService;
-    EquipmentDemandService equipmentDemandService;
-    DemandService demandService;
-
-    public ReservationController(EquipmentDemandService equipmentDemandService, EquipmentService equipmentService, DemandService demandService) {
-        this.equipmentDemandService = equipmentDemandService;
-        this.equipmentService = equipmentService;
-        this.demandService = demandService;
-    }
+    private final EquipmentService equipmentService;
+    private final EquipmentDemandService equipmentDemandService;
+    private final DemandService demandService;
 
     @PostMapping("")
-    public ResponseEntity<EquipmentDemand> makeReservation(@RequestBody ReservationDto reservationRequest) {
+    public ResponseEntity<EquipmentDemand> makeReservation(@RequestBody @Valid ReservationDto reservationRequest) {
         try {
             Equipment equipment = equipmentService.getEquipmentById(reservationRequest.getEquipmentId());
 

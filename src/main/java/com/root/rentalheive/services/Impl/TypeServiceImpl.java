@@ -1,24 +1,19 @@
-package com.root.rentalheive.services;
+package com.root.rentalheive.services.Impl;
 
 import com.root.rentalheive.entities.Type;
 import com.root.rentalheive.repositories.TypeRepository;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 
-@Service
-public class TypeServices {
+@Component
+@RequiredArgsConstructor
+public class TypeServiceImpl {
 
-    TypeRepository typeRepository;
-
-    @Autowired
-    public TypeServices(TypeRepository typeRepository){
-        this.typeRepository=typeRepository;
-    }
+    private final TypeRepository typeRepository;
 
     public Type addService(@Valid Type type) {
         return typeRepository.save(type);

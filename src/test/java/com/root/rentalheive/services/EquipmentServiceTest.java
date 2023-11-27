@@ -3,6 +3,7 @@ package com.root.rentalheive.services;
 import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.entities.Type;
 import com.root.rentalheive.repositories.EquipmentRepository;
+import com.root.rentalheive.services.Impl.EquipmentServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +24,7 @@ class EquipmentServiceTest {
     private EquipmentRepository equipmentRepository;
 
     @InjectMocks
-    private EquipmentService equipmentService;
+    private EquipmentServiceImpl equipmentServiceImpl;
     @Test
     void saveEquipment() {
         Type type = Type.builder()
@@ -37,7 +38,7 @@ class EquipmentServiceTest {
                 .name("test equipment")
                 .build();
         Mockito.when(equipmentRepository.save(equipment)).thenReturn(equipment);
-        equipmentService.saveEquipment(equipment);
+        equipmentServiceImpl.saveEquipment(equipment);
         Mockito.verify(equipmentRepository).save(equipment);
 
     }
@@ -48,7 +49,7 @@ class EquipmentServiceTest {
         equipment.setId(1L);
         equipment.setName("Updated Equipment");
         Mockito.when(equipmentRepository.save(equipment)).thenReturn(equipment);
-        equipmentService.updateEquipment(equipment);
+        equipmentServiceImpl.updateEquipment(equipment);
         Mockito.verify(equipmentRepository).save(equipment);
     }
 
@@ -58,7 +59,7 @@ class EquipmentServiceTest {
         equipment.setId(1L);
         Mockito.doNothing().when(equipmentRepository).delete(equipment);
 
-        equipmentService.deleteEquipment(equipment);
+        equipmentServiceImpl.deleteEquipment(equipment);
 
         Mockito.verify(equipmentRepository).delete(equipment);
     }
@@ -69,7 +70,7 @@ class EquipmentServiceTest {
         equipments.add(new Equipment());
         equipments.add(new Equipment());
         Mockito.when(equipmentRepository.findAll()).thenReturn(equipments);
-        List<Equipment> retrievedEquipments = equipmentService.getEquipments();
+        List<Equipment> retrievedEquipments = equipmentServiceImpl.getEquipments();
         assertEquals(equipments, retrievedEquipments);
     }
 }

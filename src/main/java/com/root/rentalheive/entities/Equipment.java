@@ -3,6 +3,9 @@ package com.root.rentalheive.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,17 +26,19 @@ public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotNull @NotEmpty
     private String name;
-
+    @NotNull @NotEmpty
     private Date createdDate;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
+    @NotBlank
     private Type type;
 
    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
-    private List<EquipmentDemand> equipmentDemands;
+   @NotBlank
+   private List<EquipmentDemand> equipmentDemands;
 
     @Override
     public boolean equals(Object o) {

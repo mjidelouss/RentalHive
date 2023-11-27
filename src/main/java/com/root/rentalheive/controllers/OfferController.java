@@ -4,8 +4,10 @@ package com.root.rentalheive.controllers;
 import com.itextpdf.text.DocumentException;
 import com.root.rentalheive.dto.OfferDto;
 import com.root.rentalheive.entities.Offer;
+import com.root.rentalheive.services.Impl.OfferServiceImpl;
 import com.root.rentalheive.services.OfferService;
 import com.root.rentalheive.utils.PdfGenerator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,12 +20,10 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/offers")
 public class OfferController {
-    OfferService offerService;
-
-    @Autowired
-    public OfferController(OfferService offerService){this.offerService = offerService;}
+    private final OfferService offerService;
 
     @GetMapping("")
     public List<Offer> getOffers(){

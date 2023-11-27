@@ -2,7 +2,7 @@ package com.root.rentalheive.userServiceTest;
 
 import com.root.rentalheive.entities.User;
 import com.root.rentalheive.repositories.UserRepository;
-import com.root.rentalheive.services.UserService;
+import com.root.rentalheive.services.Impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,13 +16,13 @@ public class addUserTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Test
     public void addUser() {
         User user = mock(User.class);
         when(userRepository.save(user)).thenReturn(user);
-        assertNotNull(userService.addUser(user));
+        assertNotNull(userServiceImpl.addUser(user));
     }
 
 

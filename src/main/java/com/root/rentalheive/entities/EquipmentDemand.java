@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,7 +21,9 @@ public class EquipmentDemand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private Date startDate;
 
     @Nullable
@@ -26,10 +31,12 @@ public class EquipmentDemand {
 
     @ManyToOne
     @JoinColumn(name = "equipment_id")
+    @NotBlank
     private Equipment equipment;
 
     @ManyToOne
     @JoinColumn(name = "demand_id")
+    @NotBlank
     private Demand demand;
 
     public Map<String, Object> toMap() {

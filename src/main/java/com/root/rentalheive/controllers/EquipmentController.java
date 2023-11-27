@@ -3,8 +3,8 @@ package com.root.rentalheive.controllers;
 import com.root.rentalheive.dto.EquipmentDto;
 import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.services.EquipmentService;
-import com.root.rentalheive.services.TypeServices;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.root.rentalheive.services.TypeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +14,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/equipments")
 public class EquipmentController {
 
-    TypeServices typeServices;
+    private final TypeService typeServices;
 
-    EquipmentService equipmentServices;
-
-    public EquipmentController(EquipmentService equipmentServices, TypeServices typeServices) {
-        this.equipmentServices = equipmentServices;
-        this.typeServices = typeServices;
-    }
+    private final EquipmentService equipmentServices;
 
     @GetMapping("")
     public ResponseEntity<List<Equipment>> getEquipments() {

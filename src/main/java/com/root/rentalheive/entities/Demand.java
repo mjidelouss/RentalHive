@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +30,9 @@ public class Demand {
     private Long id ;
 
     @JsonProperty("DemandedDate")
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private Date DemandedDate;
 
     @Nullable
@@ -35,14 +41,17 @@ public class Demand {
 
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL)
     @JsonIgnore
+    @NotNull @NotBlank @NotEmpty
     private List<Devis> devis;
 
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL)
     @JsonIgnore
+    @NotNull @NotBlank @NotEmpty
     private List<EquipmentDemand> equipmentDemands;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @NotNull @NotBlank @NotEmpty
     private User user;
 
 

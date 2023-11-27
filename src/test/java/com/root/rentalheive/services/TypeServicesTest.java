@@ -2,21 +2,19 @@ package com.root.rentalheive.services;
 
 import com.root.rentalheive.entities.Type;
 import com.root.rentalheive.repositories.TypeRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.root.rentalheive.services.Impl.TypeServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 
 public class TypeServicesTest {
@@ -26,7 +24,7 @@ public class TypeServicesTest {
     private TypeRepository typeRepository;
 
     @InjectMocks
-    private TypeServices typeServices;
+    private TypeServiceImpl typeServiceImpl;
 
     @Test
     public void addServiceTest() {
@@ -36,7 +34,7 @@ public class TypeServicesTest {
                 .build();
         Mockito.when(typeRepository.save(type)).thenReturn(type);
 
-        Type addedType = typeServices.addService(type);
+        Type addedType = typeServiceImpl.addService(type);
 
         assertEquals(type, addedType);
     }
@@ -50,7 +48,7 @@ public class TypeServicesTest {
 
         Mockito.when(typeRepository.save(type)).thenReturn(type);
 
-        Type updatedType = typeServices.updateService(type);
+        Type updatedType = typeServiceImpl.updateService(type);
 
         assertEquals(type, updatedType);
     }
@@ -63,7 +61,7 @@ public class TypeServicesTest {
 
         Mockito.doNothing().when(typeRepository).delete(type);
 
-        typeServices.deleteService(type);
+        typeServiceImpl.deleteService(type);
 
         Mockito.verify(typeRepository).delete(type);
     }
@@ -74,7 +72,7 @@ public class TypeServicesTest {
         types.add(new Type());
         types.add(new Type());
         Mockito.when(typeRepository.findAll()).thenReturn(types);
-        List<Type> retrievedTypes = typeServices.getTypes();
+        List<Type> retrievedTypes = typeServiceImpl.getTypes();
         assertEquals(types, retrievedTypes);
     }
 }

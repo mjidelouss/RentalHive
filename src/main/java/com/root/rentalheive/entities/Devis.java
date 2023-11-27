@@ -3,9 +3,10 @@ package com.root.rentalheive.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
@@ -22,23 +23,26 @@ public class Devis {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id ;
-
+        @NotNull
+        @NotEmpty
         private float price;
-
+        @NotNull  @NotEmpty
         private boolean isAccepted;
-
+        @NotNull @NotEmpty
         private Date startedDate;
-
+        @NotBlank
         private Date endDate;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "demand_id")
         @JsonIgnore
+        @NotNull @NotBlank @NotEmpty
         private Demand demand;
 
         @OneToOne
         @JoinColumn(name = "offer_id")
         @JsonIgnore
+        @NotNull @NotBlank @NotEmpty
         private Offer offer;
 
         public Map<String, Object> toMap() {

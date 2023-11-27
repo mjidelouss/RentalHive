@@ -2,11 +2,11 @@ package com.root.rentalheive.controllers;
 
 import com.itextpdf.text.DocumentException;
 import com.root.rentalheive.dto.DevisDto;
-import com.root.rentalheive.dto.EquipmentDto;
 import com.root.rentalheive.entities.Devis;
-import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.services.DevisService;
+import com.root.rentalheive.services.Impl.DevisServiceImpl;
 import com.root.rentalheive.utils.PdfGenerator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -19,19 +19,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/devis")
 public class Deviscontroller {
 
-    DevisService devisService;
-
-    @Autowired
-    public Deviscontroller(DevisService devisService){this.devisService = devisService;}
+    private final DevisService devisService;
 
     @GetMapping("")
     public ResponseEntity<List<Devis>> getDevis() {

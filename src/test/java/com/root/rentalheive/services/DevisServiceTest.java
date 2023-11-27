@@ -2,6 +2,7 @@ package com.root.rentalheive.services;
 
 import com.root.rentalheive.entities.Devis;
 import com.root.rentalheive.repositories.DevisRepository;
+import com.root.rentalheive.services.Impl.DevisServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,13 +21,13 @@ class DevisServiceTest {
     @Mock
     private DevisRepository devisRepository;
     @InjectMocks
-    private DevisService devisService;
+    private DevisServiceImpl devisServiceImpl;
 
     @Test
     public void returnAll() {
         List<Devis> expectedDevisList = new ArrayList<>();
         Mockito.when(devisRepository.findAll()).thenReturn(expectedDevisList);;
-        List<Devis> actualDevisList = this.devisService.getDevis();
+        List<Devis> actualDevisList = this.devisServiceImpl.getDevis();
         assertEquals(expectedDevisList, actualDevisList);
     }
 
