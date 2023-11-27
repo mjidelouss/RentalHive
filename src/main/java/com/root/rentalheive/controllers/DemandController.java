@@ -3,6 +3,7 @@ package com.root.rentalheive.controllers;
 import com.root.rentalheive.dto.DemandDto;
 import com.root.rentalheive.entities.Demand;
 import com.root.rentalheive.entities.User;
+import com.root.rentalheive.mappers.DemandMapper;
 import com.root.rentalheive.services.DemandService;
 import com.root.rentalheive.services.Impl.DemandServiceImpl;
 import com.root.rentalheive.services.Impl.UserServiceImpl;
@@ -26,15 +27,8 @@ public class DemandController {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        Demand demand = Demand.builder()
-                .user(user)
-                .DemandedDate(demandDto.getDemandedDate())
-                .endDate(demandDto.getEndDate())
-                .build();
-
+        Demand demand = DemandMapper.convertDemandDtoToDemand(demandDto, user);
         Demand savedDemand = demandService.save(demand);
-
         return new ResponseEntity<>(savedDemand, HttpStatus.CREATED);
     }
 }

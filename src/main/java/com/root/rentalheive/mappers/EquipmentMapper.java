@@ -3,8 +3,7 @@ package com.root.rentalheive.mappers;
 import com.root.rentalheive.dto.EquipmentDto;
 import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.services.TypeService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.sql.Date;
 import java.time.LocalDate;
