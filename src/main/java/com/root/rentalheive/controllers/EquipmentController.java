@@ -2,6 +2,7 @@ package com.root.rentalheive.controllers;
 
 import com.root.rentalheive.dto.EquipmentDto;
 import com.root.rentalheive.entities.Equipment;
+import com.root.rentalheive.mappers.EquipmentMapper;
 import com.root.rentalheive.services.EquipmentService;
 import com.root.rentalheive.services.TypeService;
 import lombok.RequiredArgsConstructor;
@@ -38,11 +39,7 @@ public class EquipmentController {
 
     @PostMapping("")
     public ResponseEntity<Equipment> addEquipment(@RequestBody EquipmentDto equipmentDto) {
-        Equipment equipment = Equipment.builder()
-                .name(equipmentDto.getName())
-                .createdDate(Date.valueOf(LocalDate.now()))
-                .type(typeServices.findById(equipmentDto.getTypeId()))
-                .build();
+        Equipment equipment = EquipmentMapper.convertEquipmentDtoToEquipment(equipmentDto);
 
         Equipment savedEquipment = equipmentServices.saveEquipment(equipment);
         return new ResponseEntity<>(savedEquipment, HttpStatus.CREATED);
