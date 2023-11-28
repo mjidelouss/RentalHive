@@ -2,20 +2,20 @@ package com.root.rentalheive.services.Impl;
 
 import com.root.rentalheive.entities.Equipment;
 import com.root.rentalheive.repositories.EquipmentRepository;
+import com.root.rentalheive.services.EquipmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class EquipmentServiceImpl {
+public class EquipmentServiceImpl implements EquipmentService {
 
     private final EquipmentRepository equipmentRepository;
 
-    public Equipment saveEquipment(@Valid Equipment equipment) {
+    public Equipment saveEquipment(Equipment equipment) {
         return equipmentRepository.save(equipment);
     }
 

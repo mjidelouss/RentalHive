@@ -3,13 +3,13 @@ package com.root.rentalheive.mappers;
 import com.root.rentalheive.dto.DemandDto;
 import com.root.rentalheive.entities.Demand;
 import com.root.rentalheive.entities.User;
+import com.root.rentalheive.enums.Status;
 
 public class DemandMapper {
     public static Demand convertDemandDtoToDemand(DemandDto demandDto, User user) {
-        return new Demand().builder()
+        return Demand.builder()
                 .user(user)
-                .DemandedDate(demandDto.getDemandedDate())
-                .endDate(demandDto.getEndDate())
+                .status(Status.PENDING)
                 .build();
     }
 }

@@ -28,16 +28,17 @@ public class Equipment {
     private Long id;
     @NotNull @NotEmpty
     private String name;
-    @NotNull @NotEmpty
+    @NotNull
     private Date createdDate;
-
+    @NotNull
+    private Double price;
+    @NotNull
+    private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "type_id")
-    @NotBlank
     private Type type;
 
    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
-   @NotBlank
    private List<EquipmentDemand> equipmentDemands;
 
     @Override

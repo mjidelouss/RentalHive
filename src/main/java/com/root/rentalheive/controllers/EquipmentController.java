@@ -2,6 +2,7 @@ package com.root.rentalheive.controllers;
 
 import com.root.rentalheive.dto.EquipmentDto;
 import com.root.rentalheive.entities.Equipment;
+import com.root.rentalheive.entities.Type;
 import com.root.rentalheive.mappers.EquipmentMapper;
 import com.root.rentalheive.services.EquipmentService;
 import com.root.rentalheive.services.TypeService;
@@ -39,7 +40,8 @@ public class EquipmentController {
 
     @PostMapping("")
     public ResponseEntity<Equipment> addEquipment(@RequestBody EquipmentDto equipmentDto) {
-        Equipment equipment = EquipmentMapper.convertEquipmentDtoToEquipment(equipmentDto);
+        Type type = typeServices.findById(equipmentDto.getTypeId());
+        Equipment equipment = EquipmentMapper.convertEquipmentDtoToEquipment(equipmentDto, type);
 
         Equipment savedEquipment = equipmentServices.saveEquipment(equipment);
         return new ResponseEntity<>(savedEquipment, HttpStatus.CREATED);

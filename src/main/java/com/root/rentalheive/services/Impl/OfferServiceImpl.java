@@ -4,16 +4,15 @@ import com.root.rentalheive.entities.Devis;
 import com.root.rentalheive.entities.Offer;
 import com.root.rentalheive.repositories.DevisRepository;
 import com.root.rentalheive.repositories.OfferRepository;
+import com.root.rentalheive.services.OfferService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class OfferServiceImpl {
+public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
 
     private final DevisRepository devisRepository;
@@ -28,10 +27,9 @@ public class OfferServiceImpl {
             throw new IllegalArgumentException("Devis not found for id: " + devisId);
         }
 
-        if (!devis.isAccepted()) {
+        if (devis.getStatus().name().equals("ACCEPTED")) {
             throw new IllegalStateException("Cannot create offer for non-accepted Devis.");
         }
-
         Offer offer = new Offer();
         offer.setDevis(devis);
         return offerRepository.save(offer);

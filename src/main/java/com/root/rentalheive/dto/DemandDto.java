@@ -1,5 +1,6 @@
 package com.root.rentalheive.dto;
 
+import com.root.rentalheive.enums.Status;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,5 @@ import java.util.Date;
 @NoArgsConstructor
 public class DemandDto {
     Long userId;
-    Date DemandedDate;
-    Date endDate;
+    Status status;
 }

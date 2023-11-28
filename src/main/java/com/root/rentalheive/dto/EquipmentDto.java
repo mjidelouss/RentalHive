@@ -2,7 +2,6 @@ package com.root.rentalheive.dto;
 
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,10 +13,15 @@ public class EquipmentDto {
     @Nullable
     Long id;
     String name;
+    Double price;
+    Integer quantity;
+
     Long typeId;
 
-    public EquipmentDto(String name, Long id) {
+    public EquipmentDto(String name, Long id, Double price, Integer quantity) {
         this.name = name;
         this.typeId = id;
+        this.price = price;
+        this.quantity = quantity;
     }
 }

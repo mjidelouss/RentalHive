@@ -2,16 +2,17 @@ package com.root.rentalheive.services.Impl;
 
 import com.root.rentalheive.entities.Type;
 import com.root.rentalheive.repositories.TypeRepository;
+import com.root.rentalheive.services.TypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class TypeServiceImpl {
+public class TypeServiceImpl implements TypeService {
 
     private final TypeRepository typeRepository;
 

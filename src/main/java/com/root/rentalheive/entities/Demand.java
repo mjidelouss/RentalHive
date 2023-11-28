@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.root.rentalheive.enums.Status;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -29,20 +30,13 @@ public class Demand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
-    @JsonProperty("DemandedDate")
-    @NotNull
-    @NotBlank
-    @NotEmpty
-    private Date DemandedDate;
-
-    @Nullable
-    @JsonProperty("endDate")
-    private Date endDate;
-
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL)
     @JsonIgnore
     @NotNull @NotBlank @NotEmpty
     private List<Devis> devis;
+
+    @NotNull  @NotEmpty
+    private Status status;
 
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL)
     @JsonIgnore

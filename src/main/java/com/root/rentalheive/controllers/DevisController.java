@@ -2,12 +2,14 @@ package com.root.rentalheive.controllers;
 
 import com.itextpdf.text.DocumentException;
 import com.root.rentalheive.dto.DevisDto;
+import com.root.rentalheive.entities.Demand;
 import com.root.rentalheive.entities.Devis;
+import com.root.rentalheive.mappers.DemandMapper;
+import com.root.rentalheive.mappers.DevisMapper;
+import com.root.rentalheive.services.DemandService;
 import com.root.rentalheive.services.DevisService;
-import com.root.rentalheive.services.Impl.DevisServiceImpl;
 import com.root.rentalheive.utils.PdfGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,9 +27,10 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/devis")
-public class Deviscontroller {
+public class DevisController {
 
     private final DevisService devisService;
+    private final DemandService demandService;
 
     @GetMapping("")
     public ResponseEntity<List<Devis>> getDevis() {
@@ -37,8 +40,10 @@ public class Deviscontroller {
 
     @PostMapping("")
     public ResponseEntity<FileSystemResource> saveDevis(@RequestBody DevisDto devisDto) throws IOException, DocumentException {
-        Devis devis = this.devisService.saveDevis(devisDto.getDate(), devisDto.getPrice(), devisDto.getDemand_id());
-        Map<String, Object> devisMap = devis.toMap();
+        Demand demand = demandService.getDemandById(devisDto.getDemand_id());
+        Devis devis = DevisMapper.convertDevisDtoToDevis(devisDto, demand);
+        Devis savedDevis = devisService.saveDevis(devis);
+        Map<String, Object> devisMap = savedDevis.toMap();
 
         String localFolderPath = "com/root/rentalheive/pdfs/";
 

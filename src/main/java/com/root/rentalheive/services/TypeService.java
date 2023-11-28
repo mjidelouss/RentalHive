@@ -1,11 +1,8 @@
 package com.root.rentalheive.services;
 
 import com.root.rentalheive.entities.Type;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
 public interface TypeService {
     Type findById(Long typeId);
 

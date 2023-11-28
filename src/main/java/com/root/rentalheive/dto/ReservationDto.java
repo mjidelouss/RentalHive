@@ -12,7 +12,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationDto {
+    DemandDto demandDto;
     Long equipmentId;
     Date startDate;
     Date endDate;
+    Integer quantity;
+    String matricule;
 }

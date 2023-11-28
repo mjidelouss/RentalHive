@@ -7,15 +7,20 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class EquipmentDemand {
     @Id
@@ -33,6 +38,8 @@ public class EquipmentDemand {
     @JoinColumn(name = "equipment_id")
     @NotBlank
     private Equipment equipment;
+    @NotBlank
+    private String matricule;
 
     @ManyToOne
     @JoinColumn(name = "demand_id")
@@ -47,6 +54,4 @@ public class EquipmentDemand {
 
         return map;
     }
-
-
 }

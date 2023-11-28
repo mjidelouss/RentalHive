@@ -3,13 +3,16 @@ package com.root.rentalheive.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.root.rentalheive.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +20,9 @@ import java.util.stream.Collectors;
 
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Devis {
 
@@ -25,13 +31,9 @@ public class Devis {
         private Long id ;
         @NotNull
         @NotEmpty
-        private float price;
+        private Double totalPrice;
         @NotNull  @NotEmpty
-        private boolean isAccepted;
-        @NotNull @NotEmpty
-        private Date startedDate;
-        @NotBlank
-        private Date endDate;
+        private Status status;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "demand_id")
@@ -52,10 +54,7 @@ public class Devis {
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("Equipment(s)", equipmentsList);
-                map.put("Total price", this.price);
-                map.put("Demand date", this.demand.getDemandedDate());
-                map.put("Created date", this.startedDate);
-
+                map.put("Status", this.status.name());
                 return map;
         }
 }

@@ -1,12 +1,15 @@
 package com.root.rentalheive.dto;
 
+import com.root.rentalheive.enums.Status;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DevisDto {
     Long demand_id;
-    float price;
-    Date date;
+    Double totalPrice;
+    Status status;
 }

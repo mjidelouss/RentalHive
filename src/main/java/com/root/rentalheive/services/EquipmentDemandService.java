@@ -1,10 +1,10 @@
 package com.root.rentalheive.services;
 
-import org.springframework.stereotype.Service;
+import com.root.rentalheive.entities.EquipmentDemand;
 
 import java.util.Date;
-
-@Service
 public interface EquipmentDemandService {
     boolean isEquipmentAvailable(Date startDate, Date endDate, Long equipmentId);
+
+    EquipmentDemand saveReservation(EquipmentDemand equipmentDemand);
 }

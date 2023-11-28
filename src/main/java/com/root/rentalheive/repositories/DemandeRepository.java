@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface DemandeRepository extends JpaRepository<Demand, Long> {
 
+    Demand findDemandById(Long demandId);
 }

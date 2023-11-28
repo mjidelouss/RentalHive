@@ -2,16 +2,14 @@ package com.root.rentalheive.services.Impl;
 
 import com.root.rentalheive.entities.User;
 import com.root.rentalheive.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.root.rentalheive.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-@Component
+@Service
 @RequiredArgsConstructor
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     public User getUserById(Long id){
