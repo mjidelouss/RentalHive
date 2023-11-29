@@ -2,12 +2,13 @@ package com.root.rentalheive.controllers;
 
 import com.itextpdf.text.DocumentException;
 import com.root.rentalheive.dto.DevisDto;
-import com.root.rentalheive.entities.Demand;
-import com.root.rentalheive.entities.Devis;
+import com.root.rentalheive.entities.*;
 import com.root.rentalheive.mappers.DemandMapper;
 import com.root.rentalheive.mappers.DevisMapper;
 import com.root.rentalheive.services.DemandService;
 import com.root.rentalheive.services.DevisService;
+import com.root.rentalheive.services.EquipmentDemandService;
+import com.root.rentalheive.services.EquipmentService;
 import com.root.rentalheive.utils.PdfGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -21,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +33,8 @@ public class DevisController {
 
     private final DevisService devisService;
     private final DemandService demandService;
+    private final EquipmentDemandService equipmentDemandService;
+    private final EquipmentService equipmentService;
 
     @GetMapping("")
     public ResponseEntity<List<Devis>> getDevis() {
@@ -43,7 +47,17 @@ public class DevisController {
         Demand demand = demandService.getDemandById(devisDto.getDemand_id());
         Devis devis = DevisMapper.convertDevisDtoToDevis(devisDto, demand);
         Devis savedDevis = devisService.saveDevis(devis);
-        Map<String, Object> devisMap = savedDevis.toMap();
+        EquipmentDemand equipmentDemand = equipmentDemandService.findEquipmentDemandByDemand(savedDevis.getDemand());
+        Equipment equipment = equipmentDemand.getEquipment();
+        User user = savedDevis.getDemand().getUser();
+        Map<String, Object> devisMap = new HashMap<>();
+        devisMap.put("userName", user.getName());
+        devisMap.put("Equipment", equipment.getName());
+        devisMap.put("Price", equipment.getPrice());
+        devisMap.put("Type", equipment.getType().getName());
+        devisMap.put("Start Date", equipmentDemand.getStartDate());
+        devisMap.put("End Date", equipmentDemand.getEndDate());
+        devisMap.put("totalPrice", savedDevis.getTotalPrice());
 
         String localFolderPath = "com/root/rentalheive/pdfs/";
 

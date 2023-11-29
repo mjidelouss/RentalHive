@@ -1,5 +1,6 @@
 package com.root.rentalheive.services.Impl;
 
+import com.root.rentalheive.entities.Demand;
 import com.root.rentalheive.entities.EquipmentDemand;
 import com.root.rentalheive.repositories.EquipmentDemandRepository;
 import com.root.rentalheive.services.EquipmentDemandService;
@@ -21,5 +22,10 @@ public class EquipmentDemandServiceImpl implements EquipmentDemandService {
 
     public EquipmentDemand saveReservation(EquipmentDemand equipmentDemand) {
         return equipmentDemandRepository.save(equipmentDemand);
+    }
+
+    @Override
+    public EquipmentDemand findEquipmentDemandByDemand(Demand demand) {
+        return equipmentDemandRepository.findEquipmentDemandByDemand(demand);
     }
 }

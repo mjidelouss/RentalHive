@@ -2,6 +2,7 @@ package com.root.rentalheive.services.Impl;
 
 import com.root.rentalheive.entities.Devis;
 import com.root.rentalheive.entities.Offer;
+import com.root.rentalheive.enums.Status;
 import com.root.rentalheive.repositories.DevisRepository;
 import com.root.rentalheive.repositories.OfferRepository;
 import com.root.rentalheive.services.OfferService;
@@ -27,7 +28,7 @@ public class OfferServiceImpl implements OfferService {
             throw new IllegalArgumentException("Devis not found for id: " + devisId);
         }
 
-        if (devis.getStatus().name().equals("ACCEPTED")) {
+        if (devis.getStatus() == Status.ACCEPTED) {
             throw new IllegalStateException("Cannot create offer for non-accepted Devis.");
         }
         Offer offer = new Offer();

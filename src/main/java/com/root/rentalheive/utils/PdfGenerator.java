@@ -1,9 +1,9 @@
 package com.root.rentalheive.utils;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 import java.util.Map;
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -20,41 +20,32 @@ public class PdfGenerator {
         titleParagraph.setAlignment(Element.ALIGN_CENTER);
         document.add(titleParagraph);
 
-
         Font boldFont = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.BLACK);
+
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(10f);
 
         for (Map.Entry<String, Object> entry : rowData.entrySet()) {
             String columnName = entry.getKey();
             Object value = entry.getValue();
 
-            Paragraph columnNameParagraph = new Paragraph(columnName, boldFont);
-            document.add(columnNameParagraph);
+            // Add cell for column name
+             PdfPCell nameCell = new PdfPCell(new Phrase(columnName, boldFont));
+            nameCell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(nameCell);
 
-            if (columnName.equals("Equipment(s)")) {
-                if (value instanceof List) {
-                    List<Map<String, Object>> equipmentList = (List<Map<String, Object>>) value;
-                    PdfPTable table = new PdfPTable(3);
-                    table.addCell("Name");
-                    table.addCell("Type");
-                    table.addCell("Duration");
-                    for (Map<String, Object> equipmentInfo : equipmentList) {
-                        table.setWidthPercentage(100);
-                        table.setSpacingBefore(10f);
+            // Add cell for column value
+            PdfPCell valueCell = new PdfPCell(new Phrase(value.toString()));
+            valueCell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(valueCell);
 
-                        table.addCell(equipmentInfo.get("Name").toString());
-                        table.addCell(equipmentInfo.get("Type").toString());
-                        table.addCell(equipmentInfo.get("Duration").toString());
-                    }
-                    document.add(table);
-                }
-            } else {
-                Paragraph valueParagraph = new Paragraph(value.toString());
-                document.add(valueParagraph);
-            }
-
-            document.add(new Paragraph("\n"));
+            // Add a new line after each pair of name and value
+            table.addCell("");
+            table.addCell("");
         }
 
+        document.add(table);
         document.close();
         return outputStream;
     }

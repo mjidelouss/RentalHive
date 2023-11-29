@@ -32,20 +32,17 @@ public class Demand {
 
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL)
     @JsonIgnore
-    @NotNull @NotBlank @NotEmpty
     private List<Devis> devis;
 
-    @NotNull  @NotEmpty
     private Status status;
 
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL)
     @JsonIgnore
-    @NotNull @NotBlank @NotEmpty
     private List<EquipmentDemand> equipmentDemands;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull @NotBlank @NotEmpty
+    @NotNull
     private User user;
 
 

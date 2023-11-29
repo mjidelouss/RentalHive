@@ -27,8 +27,6 @@ public class EquipmentDemand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @NotBlank
-    @NotEmpty
     private Date startDate;
 
     @Nullable
@@ -36,14 +34,11 @@ public class EquipmentDemand {
 
     @ManyToOne
     @JoinColumn(name = "equipment_id")
-    @NotBlank
     private Equipment equipment;
-    @NotBlank
     private String matricule;
 
     @ManyToOne
     @JoinColumn(name = "demand_id")
-    @NotBlank
     private Demand demand;
 
     public Map<String, Object> toMap() {

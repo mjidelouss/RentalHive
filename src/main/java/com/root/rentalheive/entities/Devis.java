@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.root.rentalheive.enums.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,28 +28,22 @@ public class Devis {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id ;
         @NotNull
-        @NotEmpty
         private Double totalPrice;
-        @NotNull  @NotEmpty
         private Status status;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "demand_id")
         @JsonIgnore
-        @NotNull @NotBlank @NotEmpty
+        @NotNull
         private Demand demand;
 
         @OneToOne
         @JoinColumn(name = "offer_id")
         @JsonIgnore
-        @NotNull @NotBlank @NotEmpty
         private Offer offer;
 
         public Map<String, Object> toMap() {
-
-
                 List<Map<String, Object>> equipmentsList = this.demand.getEquipmentDemands().stream().map(x->x.toMap()).collect(Collectors.toList());
-
                 Map<String, Object> map = new HashMap<>();
                 map.put("Equipment(s)", equipmentsList);
                 map.put("Status", this.status.name());

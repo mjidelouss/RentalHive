@@ -1,5 +1,6 @@
 package com.root.rentalheive.repositories;
 
+import com.root.rentalheive.entities.Demand;
 import com.root.rentalheive.entities.EquipmentDemand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,6 @@ public interface EquipmentDemandRepository extends JpaRepository<EquipmentDemand
             "AND ((ed.startDate <= :endDate AND ed.endDate >= :startDate) OR " +
             "(ed.startDate <= :startDate AND ed.endDate >= :endDate))")
     List<EquipmentDemand> findOverlappingDemands(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("equipmentId") Long equipmentId);
+
+    EquipmentDemand findEquipmentDemandByDemand(Demand demand);
 }
